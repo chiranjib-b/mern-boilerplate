@@ -1,5 +1,5 @@
 {
-    "name": "boilerplate",
+    "name": "mern-boilerplate",
     "version": "1.0.0",
     "description": "boilerplate code to set up a node.js backend, with a sample movie rating application",
     "main": "index.js",
