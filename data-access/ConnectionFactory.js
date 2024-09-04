@@ -8,7 +8,7 @@ let dbConnection;
 module.exports = {
     getDBConnection: function () {
         if (!dbConnection) {
-            dbConnection = mongoose.createConnection(URL, { dbName: DB_NAME, maxPoolSize: 10 });
+            dbConnection = mongoose.connect(URL, { dbName: DB_NAME, maxPoolSize: 10 });
         }
         return dbConnection;
     },

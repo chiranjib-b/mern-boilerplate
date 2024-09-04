@@ -2,20 +2,26 @@ const logger = require('_utils/logger');
 
 function connectToDB() {
     const { getDBConnection } = require('_data-access/ConnectionFactory');
-    const connection = getDBConnection();
     return new Promise((resolve, reject) => {
-        let counter = 1;
-        const timer = setInterval(function () {
-            logger.info(`[${counter}] Checking connection..`);
-            if (connection.readyState === 1) {
-                clearInterval(timer);
-                resolve();
-            } else if (counter === 5) {
-                clearInterval(timer);
-                reject('Could not connect to database after 5 retries');
-            }
-            counter++;
-        }, 1000);
+        getDBConnection()
+        .then(connection => {
+            let counter = 1;
+            const timer = setInterval(function () {
+                logger.info(`[${counter}] Checking connection..`);
+                if (connection.readyState === 1) {
+                    clearInterval(timer);
+                    resolve();
+                } else if (counter === 5) {
+                    clearInterval(timer);
+                    reject('Could not connect to database after 5 retries');
+                }
+                counter++;
+            }, 1000);
+        })
+        .catch(e => {
+            logger.error(e)
+            reject('Could not connect to database')
+        });
     });
 }
 
